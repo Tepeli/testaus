@@ -10,7 +10,19 @@ exports.index = function(req, res, next) {
   Post.find({}).exec(function (err, list_posts) {
     if (err) { return next(err); }
     // Successful, so render
+    // See more at https://expressjs.com/en/api.html#res.format
+    res.format({
+      'text/html': function(){
     res.render('posts', { title: 'Post List', post_list: list_posts});
+      },
+      'application/json': function(){
+        res.json(list_posts);
+      },
+      'default': function(){
+        // log the request and respond with 406
+        res.status(406).send('Not Acceptable');
+      }
+    });
   });
 
 };

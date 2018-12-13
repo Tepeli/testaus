@@ -4,6 +4,7 @@ services:
     container_name: app
     restart: always
     build: .
+    command: npm test
     ports:
       - "8080:3000"
     links:
@@ -14,5 +15,9 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    volumes:
+      - mongodb-datavolume:/data/db
     ports:
       - "27017:27017"
+volumes:
+  mongodb-datavolume:
